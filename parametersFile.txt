@@ -1,0 +1,30 @@
+### Full path to input files
+* path to files: /Users/marioceron/Documents/katzlab/duplications/orthomcl-release5/test2/											
+
+### Name of folder containing gene trees
+* trees folder:	 Pipelinev2_2_archive										
+
+### Name of file containing chromosomes sizes
+* chromosome size file: chromosize.csv
+
+### Name of file containing the mapping information
+* mapping file: mapFile.csv											
+
+### Major clade (op, am, ex, sr, pl, ee)
+* major clade: op											
+
+### Number of minor clades per each major clade in the database 
+* minor clades OP (Opisthokonta): tola
+* minor clades AM (Amoebozoa): chola
+* minor clades EX (Excavata): mela
+* minor clades PL (Archaeplastida): pila
+* minor clades EE (Evertthing else): chala
+* minor clades SR (SAR): pela
+* minor clades BA (Bacteria): rola
+* minor clades ZA (Archaea): nela
+
+### minimum number of leaves per tree
+* criterion: 10											
+
+### Number of nucleotides separating each interval in the map
+* m_interval: 1000
