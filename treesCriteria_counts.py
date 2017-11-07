@@ -5,7 +5,7 @@
 def count(path2files, treesFolder, majorClade, mappingFile, criterion):
 	listOGs = open(path2files + "/" + mappingFile, 'r').readlines()
 	out = open(path2files + "/" + 'criteriaANDcounts_out.csv', 'w')
-	counts = Array.new
+	counts = []
 
 	for line in listOGs.each:
 		line = line.replace("\n", "")
@@ -59,26 +59,23 @@ def count(path2files, treesFolder, majorClade, mappingFile, criterion):
 
 			if majorClade == "op":
 				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [line, criterion_meet, op, am, ex, ee, pl, sr, za, ba]
-			elsif majorClade == "am":
+			elif majorClade == "am":
 				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [line, criterion_meet, am, op, ex, ee, pl, sr, za, ba]
-			elsif majorClade == "ex":
+			elif majorClade == "ex":
 				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [line, criterion_meet, ex, ee, pl, sr, am, op, za, ba] 
-			elsif majorClade == "ee"
+			elif majorClade == "ee":
 				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [line, criterion_meet, ee, pl, sr, ex, am, op, za, ba] 		
-			elsif majorClade == "pl"
+			elif majorClade == "pl":
 				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [line, criterion_meet, pl, ee, sr, ex, am, op, za, ba] 
-			elsif majorClade == "sr"
+			elif majorClade == "sr":
 				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % [line, criterion_meet, sr, pl, ee, ex, am, op, za, ba]
-			end
 		
-			puts new_line
+			print new_line
 			out.write(new_line + "\n")
-			counts << new_line 
+			counts.append(new_line)
 		
-		else
-			puts line
+		else:
+			print line
 			out.write("%s\n" % line)
-		end
-	end	
-	
-	return "total genes: " + (listOGs.length).to_s + "\n" + "total trees: " + (counts.length).to_s	
+
+	return "total genes: " + str(len(listOGs)) + "\n" + "total trees: " + str(len(counts))
