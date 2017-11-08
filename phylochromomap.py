@@ -75,4 +75,6 @@ def main():
 	print "map size: " + str(result_mapIntervals['map size'])
 	print "genes mapped: " + str(result_mapIntervals['genes mapped'])
 	
+	os.system("rm *.pyc")
+	
 main()
