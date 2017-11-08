@@ -2,7 +2,7 @@ import os
 import TreesCriteria_counts
 import Intervals
 
-def get_parameters ():
+def get_parameters():
 	path2files = ''
 	treesFolder = ''
 	chromoSizeFile = ''
@@ -21,12 +21,12 @@ def get_parameters ():
 
 	parametersFile = open('parametersFile.txt', 'r').readlines()
 	
-	for in parameter:parametersFile:
+	for parameter in parametersFile:
 		if "*" in parameter:
 			if "path to files" in parameter:
 				path2files = parameter.split(":")[1].strip()
 			elif "trees folder" in parameter:
-				treesFolder = parameter.split(":")[1].strip
+				treesFolder = parameter.split(":")[1].strip()
 			elif "chromosome size file" in parameter:
 				chromoSizeFile = parameter.split(":")[1].strip()
 			elif "mapping file" in parameter:
@@ -59,12 +59,20 @@ def get_parameters ():
 	return path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, criterion, m_interval
 
 def main():		
-	
-	path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, criterion, m_interval = get_parameters()
-	
-	result_counts = TreesCriteria_counts.count(path2files, treesFolder, majorClade, mappingFile, criterion)
-	puts result_counts
+
+	path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, criterion, m_interval = get_parameters()	
+
+	# Counting minor clades and filtering by criterion
+	result_counts = TreesCriteria_counts.count(path2files, treesFolder, majorClade, mappingFile, int(criterion))
+
+	print "total genes = " + result_counts.split(",")[0]
+	print "total trees = " + result_counts.split(",")[1]
+
+	# Mapping the information
 	result_mapIntervals = Intervals.mapIntervals(path2files, m_interval, chromoSizeFile)
-	puts result_mapIntervals
+	
+	print "number of chromosomes: " + str(result_mapIntervals['number of chromosomes'])
+	print "map size: " + str(result_mapIntervals['map size'])
+	print "genes mapped: " + str(result_mapIntervals['genes mapped'])
 	
 main()
