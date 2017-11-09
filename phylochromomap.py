@@ -1,6 +1,7 @@
 import os
 import TreesCriteria_counts
 import Intervals
+import MapInfoHelper
 
 def get_parameters():
 	path2files = ''
@@ -74,6 +75,13 @@ def main():
 	print "number of chromosomes: " + str(result_mapIntervals['number of chromosomes'])
 	print "map size: " + str(result_mapIntervals['map size'])
 	print "genes mapped: " + str(result_mapIntervals['genes mapped'])
+	
+	
+	# Redistributing the loci that are not clearly in an interval. 
+	
+	result_mapInfoHelper = MapInfoHelper.redistributeLoci(path2files)
+	
+	print result_mapInfoHelper
 	
 	os.system("rm *.pyc")
 	
