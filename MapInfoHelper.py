@@ -67,9 +67,9 @@ def redistributeLoci(path2files):
 			# cases above
 			# ---------------------------
 
-			if len(values) >= 22:	# if two or more sequences in the current interval ...		
-				first = ",".join(values[0:12]) # takes the first seq
-				rest = ",".join(values[12:]) # takes the remaining seqs
+			if len(values) >= 24:	# if two or more sequences in the current interval ...		
+				first = ",".join(values[0:13]) # takes the first seq
+				rest = ",".join(values[13:]) # takes the remaining seqs
 				if to_add != "" : 
 					out2.write(to_add + "\n")
 				to_add = "" 
@@ -102,12 +102,12 @@ def redistributeLoci(path2files):
 						to_add = ""	# After this iteration to_add should be set to ""
 					else:
 						count_changes += 1
-						not_mapped = ",".join(remainingGenes[:10])
+						not_mapped = ",".join(remainingGenes[:11])
 						out2.write(not_mapped + "\n")
 					
 #						if remainingGenes[10]:
-					if len(remainingGenes) > 10:
-						remainingGenes = remainingGenes[10:]
+					if len(remainingGenes) > 11:
+						remainingGenes = remainingGenes[11:]
 						to_add = ",".join(remainingGenes)
 					else:
 						to_add = "" # After this iteration to_add should be set to ""
@@ -119,7 +119,7 @@ def redistributeLoci(path2files):
 			# if the next iteration interval containing either one sequence or more than 2, it
 			# would print the line of mapinfo without any modification. 
 	
-			if len(values) == 12:
+			if len(values) == 13:
 				if to_add != "" : 
 					out2.write(to_add + "\n")
 				to_add = ""

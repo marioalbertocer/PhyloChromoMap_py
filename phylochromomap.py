@@ -2,6 +2,7 @@ import os
 import TreesCriteria_counts
 import Intervals
 import MapInfoHelper
+import BuildMapMatrix
 
 def get_parameters():
 	path2files = ''
@@ -35,33 +36,50 @@ def get_parameters():
 			elif "major clade" in parameter:
 				majorClade = parameter.split(":")[1].strip()
 			elif "minor clades OP" in parameter:
-				minsOP = parameter.split(":")[1].strip()
+				minsOP = int(parameter.split(":")[1].strip())
 			elif "minor clades AM" in parameter:
-				minsAM = parameter.split(":")[1].strip()
+				minsAM = int(parameter.split(":")[1].strip())
 			elif "minor clades EX" in parameter:
-				minsEX = parameter.split(":")[1].strip()
+				minsEX = int(parameter.split(":")[1].strip())
 			elif "minor clades PL" in parameter:
-				minsPL = parameter.split(":")[1].strip()
+				minsPL = int(parameter.split(":")[1].strip())
 			elif "minor clades EE" in parameter:
-				minsEE = parameter.split(":")[1].strip()
+				minsEE = int(parameter.split(":")[1].strip())
 			elif "minor clades SR" in parameter:
-				minsSR = parameter.split(":")[1].strip()
+				minsSR = int(parameter.split(":")[1].strip())
 			elif "minor clades BA" in parameter:
-				minsBA = parameter.split(":")[1].strip()
+				minsBA = int(parameter.split(":")[1].strip())
 			elif "minor clades ZA" in parameter:
-				minsZA = parameter.split(":")[1].strip()
+				minsZA = int(parameter.split(":")[1].strip())
 			elif "criterion" in parameter:
 				criterion = parameter.split(":")[1].strip()
 			elif "m_interval" in parameter:
 				m_interval = parameter.split(":")[1].strip()
 	
-	minorsXmajor = [minsOP, minsAM, minsEX, minsPL, minsEE, minsSR, minsBA, minsZA]
+	if majorClade == 'op': 
+		majors = ["op","am","ex","ee","pl","sr","za","ba"]
+		minorsXmajor = [minsOP, minsAM, minsEX, minsEE, minsPL, minsSR, minsZA, minsBA]													
+	elif minor_clade == "am":
+		majors = ["am","op","ex","ee","pl","sr","za","ba"] 
+		minorsXmajor = [minsAM, minsOP, minsEX, minsEE, minsPL, minsSR, minsZA, minsBA]													
+	elif minor_clade == "ex":
+		majors = ["ex","ee","pl","sr","am","op","za","ba"] 
+		minorsXmajor = [minsEX, minsEE, minsPL, minsSR, minsAM, minsOP, minsZA, minsBA]													
+	elif minor_clade == "ee":
+		majors = ["ee","pl","sr","ex","am","op","za","ba"] 
+		minorsXmajor = [minsEE, minsPL, minsSR, minsEX, minsAM, minsOP, minsZA, minsBA]													
+	elif minor_clade == "pl":
+		majors = ["pl","ee","sr","ex","am","op","za","ba"]
+		minorsXmajor = [minsPL, minsEE, minsSR, minsEX, minsAM, minsOP, minsZA, minsBA]													
+	elif minor_clade == "sr":
+		majors = ["sr","pl","ee","ex","am","op","za","ba"]
+		minorsXmajor = [minsSR, minsPL, minsEE, minsEX, minsAM, minsOP, minsZA, minsBA]													
 	
-	return path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, criterion, m_interval
+	return path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, majors, criterion, m_interval
 
 def main():		
 
-	path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, criterion, m_interval = get_parameters()	
+	path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, majors, criterion, m_interval = get_parameters()	
 
 	# Counting minor clades and filtering by criterion
 	result_counts = TreesCriteria_counts.count(path2files, treesFolder, majorClade, mappingFile, int(criterion))
@@ -76,13 +94,16 @@ def main():
 	print "map size: " + str(result_mapIntervals['map size'])
 	print "genes mapped: " + str(result_mapIntervals['genes mapped'])
 	
-	
 	# Redistributing the loci that are not clearly in an interval. 
 	
 	result_mapInfoHelper = MapInfoHelper.redistributeLoci(path2files)
-	
+
 	print result_mapInfoHelper
-	
+
+	# Producing matrix for map
+	result_matrix = BuildMapMatrix.BuildMatrix(path2files, minorsXmajor, majors, m_interval)
+#	print result_matrix
+		
 	os.system("rm *.pyc")
 	
 main()

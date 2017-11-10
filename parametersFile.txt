@@ -14,14 +14,14 @@
 * major clade: op											
 
 ### Number of minor clades per each major clade in the database 
-* minor clades OP (Opisthokonta): tola
-* minor clades AM (Amoebozoa): chola
-* minor clades EX (Excavata): mela
-* minor clades PL (Archaeplastida): pila
-* minor clades EE (Evertthing else): chala
-* minor clades SR (SAR): pela
-* minor clades BA (Bacteria): rola
-* minor clades ZA (Archaea): nela
+* minor clades OP (Opisthokonta): 6
+* minor clades AM (Amoebozoa): 8
+* minor clades EX (Excavata): 8
+* minor clades PL (Archaeplastida): 3
+* minor clades EE (Evertthing else): 6
+* minor clades SR (SAR): 8
+* minor clades BA (Bacteria): 39
+* minor clades ZA (Archaea): 16
 
 ### minimum number of leaves per tree
 * criterion: 10											
