@@ -62,6 +62,13 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 		if len(values) > 2:
 			
 			m0 = round((float(values[5].replace("counts:", "")) / float(totalMinors[0])), 2)
+			print "value 1"
+			print float(values[5].replace("counts:", ""))
+			print "value 2"
+			print float(totalMinors[0])
+			print "value 3"
+			print m0
+			
 			m1 = round((float(values[6]) / float(totalMinors[1])), 2)
 			m2 = round((float(values[7]) / float(totalMinors[2])), 2)
 			m3 = round((float(values[8]) / float(totalMinors[3])), 2)
@@ -116,12 +123,6 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 				seq2map = seq2map.split(",")
 				chr_int2map = seq2map[0] + "," + seq2map[1]
 				
-				print "here"
-				print chr_int2map
-				print chr
-				print interval_only
-				print "here2"
-				
 				if (chr in chr_int2map) and (interval_only in chr_int2map):
 
 					to_replace = ",".join(seq2map[2 : len(seq2map)])
@@ -160,7 +161,6 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 					break 
 		
 			newline_map = str(chrmap[index - 1]) + "," + to_replace + ","
-			print "heeeere" + newline_map
 			newline_map_cod = str(map_cod[index - 1]) + "," + to_replace_cod + ","
 			chrmap[index - 1] = newline_map
 			map_cod[index - 1] = newline_map_cod
