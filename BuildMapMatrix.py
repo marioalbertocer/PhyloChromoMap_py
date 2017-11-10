@@ -116,12 +116,6 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 				seq2map = seq2map.split(",")
 				chr_int2map = seq2map[0] + "," + seq2map[1]
 				
-				print "here"
-				print chr_int2map
-				print chr
-				print interval_only
-				print "here2"
-				
 				if (chr in chr_int2map) and (interval_only in chr_int2map):
 
 					to_replace = ",".join(seq2map[2 : len(seq2map)])
@@ -160,7 +154,6 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 					break 
 		
 			newline_map = str(chrmap[index - 1]) + "," + to_replace + ","
-			print "heeeere" + newline_map
 			newline_map_cod = str(map_cod[index - 1]) + "," + to_replace_cod + ","
 			chrmap[index - 1] = newline_map
 			map_cod[index - 1] = newline_map_cod
