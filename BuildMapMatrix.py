@@ -61,20 +61,22 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 	
 		if len(values) > 2:
 			
-			m0 = round((float(values[5].replace("counts:", "")) / float(totalMinors[0])), 2)
-			print "value 1"
-			print float(values[5].replace("counts:", ""))
-			print "value 2"
-			print float(totalMinors[0])
-			print "value 3"
-			print m0
-			
+			m0 = round((float(values[5].replace("counts:", "")) / float(totalMinors[0])), 2)			
 			m1 = round((float(values[6]) / float(totalMinors[1])), 2)
 			m2 = round((float(values[7]) / float(totalMinors[2])), 2)
 			m3 = round((float(values[8]) / float(totalMinors[3])), 2)
 			m4 = round((float(values[9]) / float(totalMinors[4])), 2)
 			m5 = round((float(values[10]) / float(totalMinors[5])), 2)
 			m6 = round((float(values[11]) / float(totalMinors[6])), 2)
+			
+			print "value 1"
+			print float(values[6])
+			print "value 2"
+			print float(totalMinors[1])
+			print "value 3"
+			print m1		
+			
+			
 			m7 = round((float(values[12]) / float(totalMinors[7])), 2)
 
 			counts = ",".join(map(str, [m0, m1, m2, m3, m4, m5, m6, m7]))
