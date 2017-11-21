@@ -4,9 +4,10 @@ args = commandArgs(trailingOnly=TRUE)
 input = args[1]
 output = args[2]
 
-data <- as.matrix(read.table(input, sep=",", header=F))
+data <- as.matrix(read.delim(input, sep=",", header=F))
+
 data_corrected <- data[,-1] # delete intervals 
-pdf(output, width=106.25,height=75) #, res=300)
+pdf(output, width=106.25,height=75) #, res=300
 
 op = c("#ffffff", "#d7b5d8", "#df65b0", "#ce1256")
 am = c("#ffffff", "#fcae91", "#fb6a4a", "#cb181d")

@@ -7,7 +7,7 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 	criteriaFile = open(path2files + "/" + 'criteriaANDcounts_out.csv', 'r').readlines()
 	chrs_info = open(path2files + "/" + 'chromosize.csv', 'r').readlines()
 
-	out1 = open(path2files + "/" + 'freqs4map.txt', 'w')
+	out1 = open(path2files + "/" + 'freqs4map.csv', 'w')
 	out2 = open(path2files + "/" + 'matrix-raw.csv', 'w')
 	out3 = open(path2files + "/" + 'matrix4map.csv', 'w')
 
@@ -43,7 +43,6 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 	for line in criteriaFile:
 		if "yes" not in line:
 			chr = line.split(",")[0]
-#			chrs.append(chr)
 			locus = str(line.split(",")[1])
 			young_loci.append(chr + "," + locus)
 			print chr + "\t" + locus
@@ -52,7 +51,6 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 	freqs = []
 	for line in inFile:
 		line = line.strip()
-#		line = line.sub(/,*$/, "")   # remove
 		values = line.split(",")
 	
 		chr = values[0]
@@ -67,16 +65,7 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 			m3 = round((float(values[8]) / float(totalMinors[3])), 2)
 			m4 = round((float(values[9]) / float(totalMinors[4])), 2)
 			m5 = round((float(values[10]) / float(totalMinors[5])), 2)
-			m6 = round((float(values[11]) / float(totalMinors[6])), 2)
-			
-			print "value 1"
-			print float(values[6])
-			print "value 2"
-			print float(totalMinors[1])
-			print "value 3"
-			print m1		
-			
-			
+			m6 = round((float(values[11]) / float(totalMinors[6])), 2)			
 			m7 = round((float(values[12]) / float(totalMinors[7])), 2)
 
 			counts = ",".join(map(str, [m0, m1, m2, m3, m4, m5, m6, m7]))
@@ -91,7 +80,7 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 				young = "n"
 				if chr == chr_y:
 					if int(locus) >= int(interval):
-						if int(locus) < (int(interval) + int(m_interval)):   ### here I am 
+						if int(locus) < (int(interval) + int(m_interval)):
 							young = "y"
 							break
 
@@ -99,36 +88,33 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 		freqs.append(chr + "," + str(interval) + "," + young + "," + counts)
 		out1.write(chr + "," + str(interval) + "," + counts + "\n")
 
-
 	chrs = []
 	for chr in chrs_info:
 		chr = chr.split(",")[0]
 		chrs.append(chr)	
-	print chrs
 	
 	chrmap = sorted(map(int, list(set(intervals))))
-	print chrmap
-	map_cod = list(set(intervals))
+	map_cod = sorted(map(int, list(set(intervals))))
 	
 	index = 0 
 	for interval in chrmap:
 		print interval
 		index = index + 1
 		interval_only = str(interval)#.split(",")[0]
-		to_replace = ",".join("NA" * 9)
-		to_replace_cod = ",".join("NA" * 10)
+		to_replace = ",".join(["NA"] * 9)
+		to_replace_cod = ",".join(["NA"] * 10)
 
 		for chr in chrs:
 			for seq2map in freqs:
-				to_replace = ",".join("NA" * 9)
-				to_replace_cod = ",".join("NA" * 10)
+				to_replace = ",".join(["NA"] * 9)
+				to_replace_cod = ",".join(["NA"] * 10)
 				seq2map = seq2map.split(",")
 				chr_int2map = seq2map[0] + "," + seq2map[1]
 				
 				if (chr in chr_int2map) and (interval_only in chr_int2map):
 
 					to_replace = ",".join(seq2map[2 : len(seq2map)])
-					counts2cod = seq2map[3 : len(seq2map)]				
+					counts2cod = seq2map[3 : len(seq2map)]	
 					minor = 0
 					coded_counts = []
 					coded_young = ""
@@ -171,7 +157,7 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 	for line in chrmap:
 
 		index = index + 1
-		values = line#.split(",")
+		values = line.split(",")
 		print "number of chromosomes: " + str(len(values) / 9)
 		out2.write(line + "\n")
 		out3.write(map_cod[index -1] + "\n")
