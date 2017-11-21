@@ -1,8 +1,8 @@
 ### Full path to input files
-* path to files: /Users/marioceron/Documents/katzlab/duplications/orthomcl-release5/test2/											
+* path to files: ./test/											
 
 ### Name of folder containing gene trees
-* trees folder:	 Pipelinev2_2_archive										
+* trees folder:	 trees										
 
 ### Name of file containing chromosomes sizes
 * chromosome size file: chromosize.csv
