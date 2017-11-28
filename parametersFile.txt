@@ -18,12 +18,12 @@
 * minor clades AM (Amoebozoa): 8
 * minor clades EX (Excavata): 8
 * minor clades PL (Archaeplastida): 3
-* minor clades EE (Evertthing else): 6
+* minor clades EE (Everything else): 6
 * minor clades SR (SAR): 8
 * minor clades BA (Bacteria): 39
 * minor clades ZA (Archaea): 16
 
-### minimum number of leaves per tree
+### minimum number of leaves per tree (trees with less leaves are not mapped)
 * criterion: 10											
 
 ### Number of nucleotides separating each interval in the map

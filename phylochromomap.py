@@ -78,7 +78,18 @@ def get_parameters():
 	return path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, majors, criterion, m_interval
 
 def main():		
+	
+	rExists = os.system("which r")
+	if rExists == 256:
+		print "\n\nYou need to install r first\n\n"
+		quit()
 
+	rscriptExists = os.system("which Rscript")
+	if rscriptExists == 256:
+		print "\n\nYou need to install Rscript first\n\n"
+		quit()
+
+		
 	path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, majors, criterion, m_interval = get_parameters()	
 
 	# Counting minor clades and filtering by criterion
