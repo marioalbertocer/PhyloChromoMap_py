@@ -108,13 +108,10 @@ def main():
 	# Redistributing the loci that are not clearly in an interval. 
 	
 	result_mapInfoHelper = MapInfoHelper.redistributeLoci(path2files)
-
 	print result_mapInfoHelper
 
-	# Producing matrix for map
 	result_matrix = BuildMapMatrix.BuildMatrix(path2files, minorsXmajor, majors, m_interval)
-#	print result_matrix
-		
+	
 	os.system("rm *.pyc")
 	
 main()

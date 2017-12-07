@@ -1,8 +1,8 @@
 ### Full path to input files
-* path to files: ./test/											
+* path to files: ./test											
 
 ### Name of folder containing gene trees
-* trees folder:	 trees										
+* trees folder:	 trees
 
 ### Name of file containing chromosomes sizes
 * chromosome size file: chromosize.csv
