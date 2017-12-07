@@ -101,15 +101,11 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 		print interval
 		index = index + 1
 		interval_only = str(interval)#.split(",")[0]
-#		to_replace = ",".join(["NA"] * 9)
-#		to_replace_cod = ",".join(["NA"] * 10)
 		to_replace = ",".join([""] * 9)
 		to_replace_cod = ",".join([""] * 10)
 
 		for chr in chrs:
 			for seq2map in freqs:
-#				to_replace = ",".join(["NA"] * 9)
-#				to_replace_cod = ",".join(["NA"] * 10)
 				to_replace = ",".join([""] * 9)
 				to_replace_cod = ",".join([""] * 10)
 				seq2map = seq2map.split(",")
