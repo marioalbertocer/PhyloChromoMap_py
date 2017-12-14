@@ -1,0 +1,30 @@
+### Full path to input files
+* path to files: ../test2
+
+### Name of folder containing gene trees
+* trees folder:	 trees
+
+### Name of file containing chromosomes sizes
+* chromosome size file: chromosize.csv
+
+### Name of file containing the mapping information
+* mapping file: mapFile.csv											
+
+### Major clade (Op, Am, Ex, Sr, Pl, EE)
+* major clade: Op
+
+### Number of minor clades per each major clade in the database 
+* minor clades Op (Opisthokonta): 6
+* minor clades Am (Amoebozoa): 8
+* minor clades Ex (Excavata): 8
+* minor clades Pl (Archaeplastida): 3
+* minor clades EE (Everything else): 6
+* minor clades Sr (SAR): 8
+* minor clades Ba (Bacteria): 39
+* minor clades Za (Archaea): 16
+
+### minimum number of leaves per tree (trees with less leaves are not mapped)
+* criterion: 10											
+
+### Number of nucleotides separating each interval in the map
+* m_interval: 1000
