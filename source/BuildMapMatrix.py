@@ -55,7 +55,8 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 	
 		chr = values[0]
 		interval = values[1]
-		intervals.append(interval)
+		if interval not in intervals:
+			intervals.append(interval)
 	
 		if len(values) > 2:
 			
@@ -93,72 +94,83 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 		chr = chr.split(",")[0]
 		chrs.append(chr)	
 	
-	chrmap = sorted(map(int, list(set(intervals))))
-	map_cod = sorted(map(int, list(set(intervals))))
+
 	
-	index = 0 
-	for interval in chrmap:
-		print interval
-		index = index + 1
-		interval_only = str(interval)#.split(",")[0]
-		to_replace = ",".join([""] * 9)
-		to_replace_cod = ",".join([""] * 10)
+	print "\n-------- Building map matrix: -----------"
 
-		for chr in chrs:
-			for seq2map in freqs:
-				to_replace = ",".join([""] * 9)
+	chrmap = []
+	chrmap_cod = []
+	for i in intervals : 
+		chrmap.append(i)
+		chrmap_cod.append(i)
+
+	for chr in chrs:
+
+		if chr == freqs[0].split(",")[0]:
+
+			index = 0 
+			for interval in intervals:
+				index = index + 1
+				interval_only = str(interval)
 				to_replace_cod = ",".join([""] * 10)
-				seq2map = seq2map.split(",")
-				
-				if (chr == seq2map[0]) and (interval_only == seq2map[1]):
+				to_replace = ",".join([""] * 9)
 
-					to_replace = ",".join(seq2map[2 : len(seq2map)])
-					counts2cod = seq2map[3 : len(seq2map)]	
-					minor = 0
-					coded_counts = []
-					coded_young = ""
+				if freqs:
+					if str(interval) == freqs[0].split(',')[1]:
+						seq2map = freqs[0]
+						seq2map = seq2map.split(",")
+						del freqs[0]
+						to_replace = ",".join(seq2map[2 : len(seq2map)])
+						counts2cod = seq2map[3 : len(seq2map)]
+						minor = 0
+						coded_counts = []
+						coded_young = ""
+						
+						for minor_count in counts2cod:
+							minor = minor + 1 
+																
+							if (float(minor_count) >= 0) and (float(minor_count) <= 0.25):
+								minor_count_cod = minor_code[majors[minor - 1]].split(",")[0]
+								coded_counts.append(minor_count_cod)
+								continue
 
-					for minor_count in counts2cod:
-						minor = minor + 1 
-															
-						if (float(minor_count) >= 0) and (float(minor_count) <= 0.25):
-							minor_count_cod = minor_code[majors[minor - 1]].split(",")[0]
-							coded_counts.append(minor_count_cod)
-							continue
+							if (float(minor_count) > 0.25) and (float(minor_count) <= 0.5):
+								minor_count_cod = minor_code[majors[minor - 1]].split(",")[1]
+								coded_counts.append(minor_count_cod)
+								continue
 
-						if (float(minor_count) > 0.25) and (float(minor_count) <= 0.5):
-							minor_count_cod = minor_code[majors[minor - 1]].split(",")[1]
-							coded_counts.append(minor_count_cod)
-							continue
+							if (float(minor_count) > 0.5) and (float(minor_count) <= 0.75):
+								minor_count_cod = minor_code[majors[minor - 1]].split(",")[2]
+								coded_counts.append(minor_count_cod)
+								continue
 			
-						if (float(minor_count) > 0.5) and (float(minor_count) <= 0.75):
-							minor_count_cod = minor_code[majors[minor - 1]].split(",")[2]
-							coded_counts.append(minor_count_cod)
-							continue
-			
-						if (float(minor_count) >= 0.75) and (float(minor_count) <= 1):
-							minor_count_cod = minor_code[majors[minor - 1]].split(",")[3]
-							coded_counts.append(minor_count_cod)
-							continue
+							if (float(minor_count) >= 0.75) and (float(minor_count) <= 1):
+								minor_count_cod = minor_code[majors[minor - 1]].split(",")[3]
+								coded_counts.append(minor_count_cod)
+								continue
 				
-					if "y" in seq2map[2] or "n" in seq2map[2]:
-						coded_young = young_code[seq2map[2]]
+						if "y" in seq2map[2] or "n" in seq2map[2]:
+							coded_young = young_code[seq2map[2]]
 				
-					to_replace_cod = str(young_code["y"]) + "," + str(coded_young) + "," + ",".join(coded_counts)
-					break 
-		
-			newline_map = str(chrmap[index - 1]) + "," + to_replace + ","
-			newline_map_cod = str(map_cod[index - 1]) + "," + to_replace_cod + ","
-			chrmap[index - 1] = newline_map
-			map_cod[index - 1] = newline_map_cod
+						to_replace_cod = str(young_code["y"]) + "," + str(coded_young) + "," + ",".join(coded_counts)
+
+				if to_replace != "," * 8 : print chr + "\t" + str(interval) + "\t" + to_replace
+				newline_map = str(chrmap[index - 1]) + "," + to_replace + ","
+				newline_map_cod = str(chrmap_cod[index - 1]) + "," + to_replace_cod + ","
+				chrmap[index - 1] = newline_map
+				chrmap_cod[index - 1] = newline_map_cod						
+				
+				
+	print "\n------------------------------------------\n"	
 	
 	index = 0
 	for line in chrmap:
 
 		index = index + 1
 		values = line.split(",")
-		print "number of chromosomes: " + str(len(values) / 9)
+#		print "number of chromosomes: " + str(len(values) / 9)
 		out2.write(line + "\n")
-		out3.write(map_cod[index -1] + "\n")
+		out3.write(chrmap_cod[index -1] + "\n")
+#		out3.write(map_cod[index -1] + "\n")
 
 	os.system("Rscript --vanilla ./buildMap.R pcm " + path2files)
