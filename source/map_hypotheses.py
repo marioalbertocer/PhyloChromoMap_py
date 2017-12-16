@@ -121,6 +121,10 @@ def hypothesis(countsXmajor, hypo_line, color):
 				criteria.append('no')
 			else: 
 				criteria.append('yes')
+				
+		elif '?' in rule_part:
+			clade = rule_part.replace('?', '')
+			criteria.append('yes')
 		
 		else:
 			clade = rule_part
