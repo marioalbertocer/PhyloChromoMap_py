@@ -1,5 +1,5 @@
 ### Full path to input files
-* path to files: ../test2
+* path to files: ../E_hellem_forMap
 
 ### Name of folder containing gene trees
 * trees folder:	 trees
