@@ -73,12 +73,12 @@ def count(path2files, treesFolder, majorClade, mappingFile, criterion):
 			elif majorClade == "Sr":
 				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (line, criterion_meet, sr, pl, ee, ex, am, op, za, ba)
 		
-			print new_line
+			print(new_line)
 			out.write(new_line + "\n")
 			counts.append(new_line)
 		
 		else:
-			print line
+			print(line)
 			out.write("%s\n" % line)
 
 	return str(len(listOGs)) + "," + str(len(counts))

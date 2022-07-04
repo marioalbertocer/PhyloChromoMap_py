@@ -22,12 +22,12 @@ chromosomesFile = open(path2files + "/" + chromoSizeFile, 'r').readlines()
 # Number of hypotheses:
 
 hypo_num = 0
-print "\n------- Hypotheses: --------"
+print("\n------- Hypotheses: --------")
 for hypothesis in hypotheses:
 	hypothesis = hypothesis.split(",")[0]
-	print hypothesis
+	print(hypothesis)
 	if hypothesis : hypo_num += 1
-print "----------------------------\n"
+print("----------------------------\n")
 
 # intervals
 
@@ -140,7 +140,7 @@ def hypothesis(countsXmajor, hypo_line, color):
 
 #Test each hypothesis
 
-print "\n--------Test hypothese by interval:-----------"
+print("\n--------Test hypothese by interval:-----------")
 map = []
 for i in intervals : map.append(i)
 
@@ -176,10 +176,10 @@ for chromosome in chromosomes:
 					to_replace = "2," + ",".join(hypotesesResults)
 					real_counts = ",".join(hypotesesResults_real)
 			
-			if real_counts != "," * (hypo_num - 1) : print chromosome + "\t" + str(interval) + "\t" + real_counts
+			if real_counts != "," * (hypo_num - 1) : print(chromosome + "\t" + str(interval) + "\t" + real_counts)
 			newline_map = str(map[index - 1]) + "," + to_replace + ","
 			map[index - 1] = newline_map
-print "\n------------------------------------------\n"
+print("\n------------------------------------------\n")
 		
 # build matrix
 		

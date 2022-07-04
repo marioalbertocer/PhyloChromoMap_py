@@ -45,7 +45,7 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 			chr = line.split(",")[0]
 			locus = str(line.split(",")[1])
 			young_loci.append(chr + "," + locus)
-			print chr + "\t" + locus
+			print(chr + "\t" + locus)
 
 	intervals = []
 	freqs = []
@@ -85,7 +85,7 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 							young = "y"
 							break
 
-		print chr + "\t" + str(interval) + "\t" + young + "\t" + counts
+		print(chr + "\t" + str(interval) + "\t" + young + "\t" + counts)
 		freqs.append(chr + "," + str(interval) + "," + young + "," + counts)
 		out1.write(chr + "," + str(interval) + "," + counts + "\n")
 
@@ -96,7 +96,7 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 	
 
 	
-	print "\n-------- Building map matrix: -----------"
+	print("\n-------- Building map matrix: -----------")
 
 	chrmap = []
 	chrmap_cod = []
@@ -154,21 +154,21 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 				
 						to_replace_cod = str(young_code["y"]) + "," + str(coded_young) + "," + ",".join(coded_counts)
 
-				if to_replace != "," * 8 : print chr + "\t" + str(interval) + "\t" + to_replace
+				if to_replace != "," * 8 : print(chr + "\t" + str(interval) + "\t" + to_replace)
 				newline_map = str(chrmap[index - 1]) + "," + to_replace + ","
 				newline_map_cod = str(chrmap_cod[index - 1]) + "," + to_replace_cod + ","
 				chrmap[index - 1] = newline_map
 				chrmap_cod[index - 1] = newline_map_cod						
 				
 				
-	print "\n------------------------------------------\n"	
+	print("\n------------------------------------------\n")
 	
 	index = 0
 	for line in chrmap:
 
 		index = index + 1
 		values = line.split(",")
-#		print "number of chromosomes: " + str(len(values) / 9)
+#		print("number of chromosomes: " + str(len(values) / 9))
 		out2.write(line + "\n")
 		out3.write(chrmap_cod[index -1] + "\n")
 #		out3.write(map_cod[index -1] + "\n")

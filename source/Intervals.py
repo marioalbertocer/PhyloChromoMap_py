@@ -33,7 +33,7 @@ def mapIntervals(path2files, m_interval, chromoSizeFile):
 						
 			while (position <= chrLen):
 
-				print chr + "\t" + str(position)
+				print(chr + "\t" + str(position))
 				out.write(chr + "," + str(position))
 				result["map size"] = result["map size"] + 1
 
@@ -56,7 +56,7 @@ def mapIntervals(path2files, m_interval, chromoSizeFile):
 									counts = ",".join(counts)
 				
 									if 'yes' in criterion:	# only consider OGs that meet our criterion
-										print "locus:" + str(locus_s) + "-" + str(locus_e) + "," + "seqID:" + seq + "," + "OG:" + og + "," + "counts:" + counts
+										print("locus:" + str(locus_s) + "-" + str(locus_e) + "," + "seqID:" + seq + "," + "OG:" + og + "," + "counts:" + counts)
 										out.write("," + "locus:" + str(locus_s) + "-" + str(locus_e) + "," + "seqID:" + seq + "," + "OG:" + og + "," + "counts:" + counts)
 										result["genes mapped"] = result["genes mapped"] + 1
 				

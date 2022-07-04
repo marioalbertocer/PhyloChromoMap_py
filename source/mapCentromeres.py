@@ -37,7 +37,7 @@ for centromeres_line in centromeres:
 		fields = line_matrix.split(",")
 		if int(fields[0]) in centromere:
 			fields[chrINmatrix] = "7"
-			print centromeres_line + "\t" + "done"				
+			print(centromeres_line + "\t" + "done")
 			newline = ",".join(fields)
 			matrix[line_index] = newline
 			

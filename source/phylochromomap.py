@@ -81,12 +81,12 @@ def main():
 	
 	rExists = os.system("which r")
 	if rExists == 256:
-		print "\n\nYou need to install r first\n\n"
+		print("\n\nYou need to install r first\n\n")
 		quit()
 
 	rscriptExists = os.system("which Rscript")
 	if rscriptExists == 256:
-		print "\n\nYou need to install Rscript first\n\n"
+		print("\n\nYou need to install Rscript first\n\n")
 		quit()
 
 		
@@ -95,23 +95,23 @@ def main():
 	# Counting minor clades and filtering by criterion
 	result_counts = TreesCriteria_counts.count(path2files, treesFolder, majorClade, mappingFile, int(criterion))
 
-	print "total genes = " + result_counts.split(",")[0]
-	print "total trees = " + result_counts.split(",")[1]
+	print("total genes = " + result_counts.split(",")[0])
+	print("total trees = " + result_counts.split(",")[1])
 
 	# Mapping the information
 	result_mapIntervals = Intervals.mapIntervals(path2files, m_interval, chromoSizeFile)
 	
-	print "number of chromosomes: " + str(result_mapIntervals['number of chromosomes'])
-	print "map size: " + str(result_mapIntervals['map size'])
-	print "genes mapped: " + str(result_mapIntervals['genes mapped'])
+	print("number of chromosomes: " + str(result_mapIntervals['number of chromosomes']))
+	print("map size: " + str(result_mapIntervals['map size']))
+	print("genes mapped: " + str(result_mapIntervals['genes mapped']))
 	
 	# Redistributing the loci that are not clearly in an interval. 
 	
 	result_mapInfoHelper = MapInfoHelper.redistributeLoci(path2files)
-	print result_mapInfoHelper
+	print(result_mapInfoHelper)
 
 	result_matrix = BuildMapMatrix.BuildMatrix(path2files, minorsXmajor, majors, m_interval)
 	
-	os.system("rm *.pyc")
+#	os.system("rm *.pyc")
 	
 main()

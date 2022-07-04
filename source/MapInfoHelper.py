@@ -50,7 +50,7 @@ def redistributeLoci(path2files):
 		count_changes = 0
 		map_corrected = []
 	
-		print "\nRUN # " + str(run) + ":\n" 
+		print("\nRUN # " + str(run) + ":\n")
 	
 	#	Reading mapInfo ...
 	#	mapinfo.each do |line|
@@ -76,7 +76,7 @@ def redistributeLoci(path2files):
 				to_add = rest		# put the remaining sequences in global variable "to_add"
 				line = first		# modify the line of mapInfo and print the interval with 
 										# only the first sequence.
-				print line
+				print(line)
 				map_corrected.append(line)
 	
 			# if the next iteration is in a enpty interval, it would add the sequence saved in 
@@ -112,7 +112,7 @@ def redistributeLoci(path2files):
 					else:
 						to_add = "" # After this iteration to_add should be set to ""
 			
-				print line
+				print(line)
 
 				map_corrected.append(line)
 	
@@ -123,12 +123,12 @@ def redistributeLoci(path2files):
 				if to_add != "" : 
 					out2.write(to_add + "\n")
 				to_add = ""
-				print line
+				print(line)
 				map_corrected.append(line)
 	
 		map = map_corrected
 	
-		print "number of changes: " + str(count_changes)
+		print("number of changes: " + str(count_changes))
 		if count_changes == 0:
 			exe = 'n' 
 	
@@ -141,9 +141,9 @@ def redistributeLoci(path2files):
 	# Writing mapInfo_corrected   |
 	# ----------------------------
 
-	print "\n\n===== mapInfo_corrected =====\n\n"
+	print("\n\n===== mapInfo_corrected =====\n\n")
 	for line in map:
-		print line
+		print(line)
 		out.write(line + "\n")
 	
 	return "Information to be mapped is already corrected"
