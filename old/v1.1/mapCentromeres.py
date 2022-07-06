@@ -8,8 +8,6 @@ for parameter in parametersFile:
 			path2files = parameter.split(":")[1].strip()
 		elif "chromosome size file:" in parameter:
 			chromoSizeFile = parameter.split(":")[1].strip()
-		elif "major clades:" in parameter:
-			majors = (parameter.split(":")[1].strip()).split(",")
 
 matrix = open(path2files + '/matrix4map.csv', 'r').readlines()
 centromeres = open(path2files + "/" + chromoSizeFile, 'r').readlines()
@@ -21,7 +19,7 @@ interval = 1000
 
 for centromeres_line in centromeres:
 	centromeres_line = centromeres_line.replace("\n", "")
-	chrINmatrix = (chr * (len(majors) + 3)) + 1
+	chrINmatrix = (chr * 11) + 1
 	chr += 1
 	centromere = []
 	
@@ -38,7 +36,7 @@ for centromeres_line in centromeres:
 	for line_matrix in matrix: 
 		fields = line_matrix.split(",")
 		if int(fields[0]) in centromere:
-			fields[chrINmatrix] = str((len(majors) * 4) + 4)
+			fields[chrINmatrix] = "7"
 			print(centromeres_line + "\t" + "done")
 			newline = ",".join(fields)
 			matrix[line_index] = newline

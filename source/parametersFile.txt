@@ -10,21 +10,39 @@
 ### Name of file containing the mapping information
 * mapping file: mapFile.csv											
 
-### Major clade (Op, Am, Ex, Sr, Pl, EE)
+### Major clades - The same order will be used for the maps
+* major clades: Op,Am,Ex,EE,Pl,Sr,Za,Ba
+
+### Major clade identifier of taxon of interest
 * major clade: Op
 
 ### Number of minor clades per each major clade in the database 
-* minor clades Op (Opisthokonta): 6
-* minor clades Am (Amoebozoa): 8
-* minor clades Ex (Excavata): 8
-* minor clades Pl (Archaeplastida): 3
-* minor clades EE (Everything else): 6
-* minor clades Sr (SAR): 8
-* minor clades Ba (Bacteria): 39
-* minor clades Za (Archaea): 16
+### Default: Op for Opisthokonta, Am for Amoebozoa, Ex for Excavata
+### Pl for Archaeplastida, EE for Everything else, Sr for SAR, Ba for 
+### Bacteria and Za for Archaea. The user can specify different names and
+### number of major clades
+* minor clades - Op: 6
+* minor clades - Am: 8
+* minor clades - Ex: 8
+* minor clades - Pl: 3
+* minor clades - EE: 6
+* minor clades - Sr: 8
+* minor clades - Za: 16
+* minor clades - Ba: 39
 
 ### minimum number of leaves per tree (trees with less leaves are not mapped)
 * criterion: 10											
 
 ### Number of nucleotides separating each interval in the map
 * m_interval: 1000
+
+### Colors - Use either R colors code www.stat.columbia.edu/~tzheng/files/Rcolor.pdf
+### or hex color codes www.color-hex.com. There should be 4 colors per major clade
+* color codes - Op: #ffffff, #d7b5d8, #df65b0, #ce1256
+* color codes - Am: #ffffff, #fcae91, #fb6a4a, #cb181d
+* color codes - Ex: #ffffff, #bdd7e7, #6baed6, #2171b5
+* color codes - Pl: #ffffff, #bae4b3, #74c476, #238b45
+* color codes - EE: #ffffff, #cbc9e2, #9e9ac8, #6a51a3
+* color codes - Sr: #ffffff, #fed98e, #fe9929, #cc4c02
+* color codes - Za: #ffffff, #cccccc, #969696, #525252
+* color codes - Ba: #ffffff, #cccccc, #969696, #525252

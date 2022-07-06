@@ -4,7 +4,7 @@
 
 import os
 
-def count(path2files, treesFolder, majorClade, majors, mappingFile, criterion):
+def count(path2files, treesFolder, majorClade, mappingFile, criterion):
 	
 	listOGs = open(path2files + "/" + mappingFile, 'r').readlines()
 	out = open(path2files + "/" + 'criteriaANDcounts_out.csv', 'w')
@@ -16,8 +16,7 @@ def count(path2files, treesFolder, majorClade, majors, mappingFile, criterion):
 		
 		if tree_code != "no_tree":
 			minCs = []
-			minCscounts = {}
-			for major in majors: minCscounts[major] = 0
+			op = am = pl = ex = sr = ee = ba = za = 0
 			criterion_meet = 'no'
 
 			# take each gene tree from the gene trees database
@@ -50,13 +49,30 @@ def count(path2files, treesFolder, majorClade, majors, mappingFile, criterion):
 					# Finally, we count the number of minor clades per major clade there are 
 					# in the tree. 
 					for minC in minCs:
-						for k in minCscounts.keys():
-							if k == minC.split("_")[0]: 
-								minCscounts[k] += 1
-									
+						if ("Pl_" in minC) : pl = pl + 1	
+						if ("EE_" in minC) : ee = ee + 1
+						if ("Sr_" in minC) : sr = sr + 1
+						if ("Ex_" in minC) : ex = ex + 1
+						if ("Am_" in minC) : am = am + 1
+						if ("Op_" in minC) : op = op + 1
+						if ("Za_" in minC) : za = za + 1
+						if ("Ba_" in minC) : ba = ba + 1
+		
 			# The report is corrected with criterion and counts and printed in the terminal
-			new_line = "%s,%s" % (line, criterion_meet)
-			for major in majors: new_line += "," + str(minCscounts[major])
+			
+			if majorClade == "Op":			
+				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (line, criterion_meet, op, am, ex, ee, pl, sr, za, ba)
+			elif majorClade == "Am":
+				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (line, criterion_meet, am, op, ex, ee, pl, sr, za, ba)
+			elif majorClade == "Ex":
+				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (line, criterion_meet, ex, ee, pl, sr, am, op, za, ba)
+			elif majorClade == "EE":
+				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (line, criterion_meet, ee, pl, sr, ex, am, op, za, ba)
+			elif majorClade == "Pl":
+				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (line, criterion_meet, pl, ee, sr, ex, am, op, za, ba)
+			elif majorClade == "Sr":
+				new_line = "%s,%s,%s,%s,%s,%s,%s,%s,%s,%s" % (line, criterion_meet, sr, pl, ee, ex, am, op, za, ba)
+		
 			print(new_line)
 			out.write(new_line + "\n")
 			counts.append(new_line)

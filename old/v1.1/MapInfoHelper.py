@@ -29,7 +29,7 @@ clade counting will be saved in the document notMappedGenes.txt
 
 import os
 
-def redistributeLoci(path2files, majors):
+def redistributeLoci(path2files):
 
 	out = open(path2files + "/" + 'mapInfo_corrected.csv', 'w')
 	out2 = open(path2files + "/" + 'notMappedGenes.csv', 'w')
@@ -57,8 +57,6 @@ def redistributeLoci(path2files, majors):
 		for line in map:
 			line = line.replace("\n", "")
 			values = line.split(",")
-			first_cut = 2 + (3 + len(majors)) # size of the info of a gene in an interval (when only one or first)
-			next_cut = 3 + len(majors) # size of the info of the subsequent genes in an interval (when more than one)
 	
 			# ---------------------------
 			# It is going to print each line in the output exactly as in mapInfo except when there 
@@ -69,9 +67,9 @@ def redistributeLoci(path2files, majors):
 			# cases above
 			# ---------------------------
 
-			if len(values) >= 2 + (3 + len(majors)) * 2:	# if two or more sequences in the current interval ...
-				first = ",".join(values[0:first_cut]) # takes the first seq
-				rest = ",".join(values[first_cut:]) # takes the remaining seqs
+			if len(values) >= 24:	# if two or more sequences in the current interval ...		
+				first = ",".join(values[0:13]) # takes the first seq
+				rest = ",".join(values[13:]) # takes the remaining seqs
 				if to_add != "" : 
 					out2.write(to_add + "\n")
 				to_add = "" 
@@ -104,12 +102,12 @@ def redistributeLoci(path2files, majors):
 						to_add = ""	# After this iteration to_add should be set to ""
 					else:
 						count_changes += 1
-						not_mapped = ",".join(remainingGenes[:next_cut])
+						not_mapped = ",".join(remainingGenes[:11])
 						out2.write(not_mapped + "\n")
 					
 #						if remainingGenes[10]:
-					if len(remainingGenes) > next_cut:
-						remainingGenes = remainingGenes[next_cut:]
+					if len(remainingGenes) > 11:
+						remainingGenes = remainingGenes[11:]
 						to_add = ",".join(remainingGenes)
 					else:
 						to_add = "" # After this iteration to_add should be set to ""
@@ -121,7 +119,7 @@ def redistributeLoci(path2files, majors):
 			# if the next iteration interval containing either one sequence or more than 2, it
 			# would print the line of mapinfo without any modification. 
 	
-			if len(values) == first_cut:
+			if len(values) == 13:
 				if to_add != "" : 
 					out2.write(to_add + "\n")
 				to_add = ""

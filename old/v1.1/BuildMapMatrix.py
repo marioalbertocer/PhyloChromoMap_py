@@ -11,31 +11,30 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 	out2 = open(path2files + "/" + 'matrix-raw.csv', 'w')
 	out3 = open(path2files + "/" + 'matrix4map.csv', 'w')
 
-	# ____________________________ ASSIGNING COLORS ______________________________________
-	# This is an example of the codes for assigning colors to the values:
+	# This is the codes for assigning colors to the values:
 
 	#	Op	Am	Pl	Ex	Sr	EE	Ba	Za
 	#[0-25]	1	5	9	13	17	21	25	29
 	#(0.25-0.5]	2	6	10	14	18	22	26	30
 	#(0.5-0.75]	3	7	11	15	19	23	27	31
 	#(0.75-1]	4	8	12	16	20	24	28	32
+
 	# Notice that [ and ] represent close interval and ( and ) represent open interval
 
 	minor_code = {}
-	colorInd_l = 0
-	for major in majors:
-		colorInd_l += 1
-		colorInd_r = colorInd_l + 3
-		colors_major = []
-		for n in range(colorInd_l, colorInd_r + 1): colors_major.append(str(n))
-		minor_code[major] = colors_major
-		colorInd_l = colorInd_r
 	
+	minor_code["Op"] = "1,2,3,4"
+	minor_code["Am"] = "5,6,7,8"
+	minor_code["Pl"] = "9,10,11,12"
+	minor_code["Ex"] = "13,14,15,16"
+	minor_code["Sr"] = "17,18,19,20"
+	minor_code["EE"] = "21,22,23,24"
+	minor_code["Ba"] = "25,26,27,28"
+	minor_code["Za"] = "29,30,31,32"
+
 	young_code = {}
-	young_code["y"] = (len(majors) * 4) + 1
-	young_code["n"] = (len(majors) * 4) + 2
-	chrm_color = (len(majors) * 4) + 3
-	#_____________________________________________________________________________________	
+	young_code["y"] = 33
+	young_code["n"] = 34
 
 	# Here we are extracting the loci of the young CDSs from the seqs folder. The young loci 
 	# will be also mapped
@@ -60,17 +59,20 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 			intervals.append(interval)
 	
 		if len(values) > 2:
-			c = []
-			values_minCs = values[5:]
-			for i in range(0,len(majors)):
-				v = float(values_minCs[i].replace("counts:", ""))
-				m = majors[i]
-				mc = round((v/float(totalMinors[m])),2)
-				c.append(mc)
-			counts = ",".join(map(str, c))
+			
+			m0 = round((float(values[5].replace("counts:", "")) / float(totalMinors[0])), 2)			
+			m1 = round((float(values[6]) / float(totalMinors[1])), 2)
+			m2 = round((float(values[7]) / float(totalMinors[2])), 2)
+			m3 = round((float(values[8]) / float(totalMinors[3])), 2)
+			m4 = round((float(values[9]) / float(totalMinors[4])), 2)
+			m5 = round((float(values[10]) / float(totalMinors[5])), 2)
+			m6 = round((float(values[11]) / float(totalMinors[6])), 2)			
+			m7 = round((float(values[12]) / float(totalMinors[7])), 2)
+
+			counts = ",".join(map(str, [m0, m1, m2, m3, m4, m5, m6, m7]))
 			young = "n"
 		else:
-			counts = ",".join("0" * len(majors))
+			counts = ",".join("0" * 8)
 		
 			for locus in young_loci:
 				chr_y = locus.split(",")[0]
@@ -110,8 +112,8 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 			for interval in intervals:
 				index = index + 1
 				interval_only = str(interval)
-				to_replace_cod = ",".join([""] * (len(majors)+2))
-				to_replace = ",".join([""] * (len(majors) + 1))
+				to_replace_cod = ",".join([""] * 10)
+				to_replace = ",".join([""] * 9)
 
 				if freqs:
 					if str(interval) == freqs[0].split(',')[1]:
@@ -128,31 +130,31 @@ def BuildMatrix(path2files, totalMinors, majors, m_interval):
 							minor = minor + 1 
 																
 							if (float(minor_count) >= 0) and (float(minor_count) <= 0.25):
-								minor_count_cod = minor_code[majors[minor - 1]][0]
+								minor_count_cod = minor_code[majors[minor - 1]].split(",")[0]
 								coded_counts.append(minor_count_cod)
 								continue
 
 							if (float(minor_count) > 0.25) and (float(minor_count) <= 0.5):
-								minor_count_cod = minor_code[majors[minor - 1]][1]
+								minor_count_cod = minor_code[majors[minor - 1]].split(",")[1]
 								coded_counts.append(minor_count_cod)
 								continue
 
 							if (float(minor_count) > 0.5) and (float(minor_count) <= 0.75):
-								minor_count_cod = minor_code[majors[minor - 1]][2]
+								minor_count_cod = minor_code[majors[minor - 1]].split(",")[2]
 								coded_counts.append(minor_count_cod)
 								continue
 			
 							if (float(minor_count) >= 0.75) and (float(minor_count) <= 1):
-								minor_count_cod = minor_code[majors[minor - 1]][3]
+								minor_count_cod = minor_code[majors[minor - 1]].split(",")[3]
 								coded_counts.append(minor_count_cod)
 								continue
 				
 						if "y" in seq2map[2] or "n" in seq2map[2]:
 							coded_young = young_code[seq2map[2]]
 				
-						to_replace_cod = str(chrm_color) + "," + str(coded_young) + "," + ",".join(coded_counts)
+						to_replace_cod = str(young_code["y"]) + "," + str(coded_young) + "," + ",".join(coded_counts)
 
-				if to_replace != "," * len(majors) : print(chr + "\t" + str(interval) + "\t" + to_replace)
+				if to_replace != "," * 8 : print(chr + "\t" + str(interval) + "\t" + to_replace)
 				newline_map = str(chrmap[index - 1]) + "," + to_replace + ","
 				newline_map_cod = str(chrmap_cod[index - 1]) + "," + to_replace_cod + ","
 				chrmap[index - 1] = newline_map

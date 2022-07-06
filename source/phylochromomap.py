@@ -1,4 +1,4 @@
-import os
+import os, sys
 import TreesCriteria_counts
 import Intervals
 import MapInfoHelper
@@ -22,7 +22,8 @@ def get_parameters():
 	m_interval = ''
 
 	parametersFile = open('parametersFile.txt', 'r').readlines()
-	
+	minorsXmajor = {}
+	colors = {} 
 	for parameter in parametersFile:
 		if "*" in parameter:
 			if "path to files:" in parameter:
@@ -33,49 +34,25 @@ def get_parameters():
 				chromoSizeFile = parameter.split(":")[1].strip()
 			elif "mapping file:" in parameter:
 				mappingFile = parameter.split(":")[1].strip()
+			elif "major clades:" in parameter:
+				majors = (parameter.split(":")[1].strip()).split(",")
 			elif "major clade:" in parameter:
-				majorClade = parameter.split(":")[1].strip()
-			elif "minor clades Op" in parameter:
-				minsOP = int(parameter.split(":")[1].strip())
-			elif "minor clades Am" in parameter:
-				minsAM = int(parameter.split(":")[1].strip())
-			elif "minor clades Ex" in parameter:
-				minsEX = int(parameter.split(":")[1].strip())
-			elif "minor clades Pl" in parameter:
-				minsPL = int(parameter.split(":")[1].strip())
-			elif "minor clades EE" in parameter:
-				minsEE = int(parameter.split(":")[1].strip())
-			elif "minor clades Sr" in parameter:
-				minsSR = int(parameter.split(":")[1].strip())
-			elif "minor clades Ba" in parameter:
-				minsBA = int(parameter.split(":")[1].strip())
-			elif "minor clades Za" in parameter:
-				minsZA = int(parameter.split(":")[1].strip())
+				majorClade = parameter.split(":")[1].strip()				
+			elif "minor clades" in parameter:
+				major = (parameter.split("-")[1].split(":")[0]).strip()
+				minors = int((parameter.split(":")[1]).strip())
+				minorsXmajor[major] = minors
 			elif "criterion:" in parameter:
 				criterion = parameter.split(":")[1].strip()
 			elif "m_interval:" in parameter:
 				m_interval = parameter.split(":")[1].strip()
-	
-	if majorClade == 'Op': 
-		majors = ["Op","Am","Ex","EE","Pl","Sr","Za","Ba"]
-		minorsXmajor = [minsOP, minsAM, minsEX, minsEE, minsPL, minsSR, minsZA, minsBA]													
-	elif minor_clade == "Am":
-		majors = ["Am","Op","Ex","EE","Pl","Sr","Za","Ba"] 
-		minorsXmajor = [minsAM, minsOP, minsEX, minsEE, minsPL, minsSR, minsZA, minsBA]													
-	elif minor_clade == "Ex":
-		majors = ["Ex","EE","Pl","Sr","Am","Op","Za","Ba"] 
-		minorsXmajor = [minsEX, minsEE, minsPL, minsSR, minsAM, minsOP, minsZA, minsBA]													
-	elif minor_clade == "EE":
-		majors = ["EE","Pl","Sr","Ex","Am","Op","Za","Ba"] 
-		minorsXmajor = [minsEE, minsPL, minsSR, minsEX, minsAM, minsOP, minsZA, minsBA]													
-	elif minor_clade == "Pl":
-		majors = ["Pl","EE","Sr","Ex","Am","Op","Za","Ba"]
-		minorsXmajor = [minsPL, minsEE, minsSR, minsEX, minsAM, minsOP, minsZA, minsBA]													
-	elif minor_clade == "Sr":
-		majors = ["Sr","Pl","EE","Ex","Am","Op","Za","Ba"]
-		minorsXmajor = [minsSR, minsPL, minsEE, minsEX, minsAM, minsOP, minsZA, minsBA]													
-	
-	return path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, majors, criterion, m_interval
+			elif "color codes" in parameter:
+				major = (parameter.split("-")[1].split(":")[0]).strip()
+				colors_inf = (parameter.split(":")[1]).split(",")
+				colors[major] = []
+				for color in colors_inf: colors[major].append(color.strip())
+				
+	return path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, majors, criterion, m_interval, colors
 
 def main():		
 	
@@ -88,12 +65,21 @@ def main():
 	if rscriptExists == 256:
 		print("\n\nYou need to install Rscript first\n\n")
 		quit()
-
 		
-	path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, majors, criterion, m_interval = get_parameters()	
+	path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, majors, criterion, m_interval, colors = get_parameters()	
 
+	# Creating file with the color codes per major clade
+	colors_file = open(path2files + "/" + 'colorCodes.csv', 'a')
+	colors_file.write("MC,[0-25],(0.25-0.5],(0.5-0.75],(0.75-1]")
+	for major in majors:
+		for mc, col in colors.items():
+			if major == mc:
+				col_codes = ",".join(col)
+				colors_file.write("\n" + mc + "," + col_codes)
+	colors_file.close()
+		
 	# Counting minor clades and filtering by criterion
-	result_counts = TreesCriteria_counts.count(path2files, treesFolder, majorClade, mappingFile, int(criterion))
+	result_counts = TreesCriteria_counts.count(path2files, treesFolder, majorClade, majors, mappingFile, int(criterion))
 
 	print("total genes = " + result_counts.split(",")[0])
 	print("total trees = " + result_counts.split(",")[1])
@@ -107,7 +93,7 @@ def main():
 	
 	# Redistributing the loci that are not clearly in an interval. 
 	
-	result_mapInfoHelper = MapInfoHelper.redistributeLoci(path2files)
+	result_mapInfoHelper = MapInfoHelper.redistributeLoci(path2files, majors)
 	print(result_mapInfoHelper)
 
 	result_matrix = BuildMapMatrix.BuildMatrix(path2files, minorsXmajor, majors, m_interval)
