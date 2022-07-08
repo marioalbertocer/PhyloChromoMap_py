@@ -35,7 +35,7 @@ def get_parameters():
 			elif "mapping file:" in parameter:
 				mappingFile = parameter.split(":")[1].strip()
 			elif "major clades:" in parameter:
-				majors = (parameter.split(":")[1].strip()).split(",")
+				majors = list(map(lambda x: x.strip(), (parameter.split(":")[1]).split(",")))
 			elif "major clade:" in parameter:
 				majorClade = parameter.split(":")[1].strip()				
 			elif "minor clades" in parameter:
@@ -69,7 +69,7 @@ def main():
 	path2files , treesFolder , chromoSizeFile , mappingFile , majorClade , minorsXmajor, majors, criterion, m_interval, colors = get_parameters()	
 
 	# Creating file with the color codes per major clade
-	colors_file = open(path2files + "/" + 'colorCodes.csv', 'a')
+	colors_file = open(path2files + "/" + 'colorCodes.csv', 'w')
 	colors_file.write("MC,[0-25],(0.25-0.5],(0.5-0.75],(0.75-1]")
 	for major in majors:
 		for mc, col in colors.items():

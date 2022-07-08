@@ -1,5 +1,5 @@
 ### Full path to input files
-* path to files: ../S_cerevisiae_CentroANDhypo
+* path to files: ../E_hellem_forMap
 
 ### Name of folder containing gene trees
 * trees folder:	 trees
