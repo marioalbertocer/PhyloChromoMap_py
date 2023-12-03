@@ -1,4 +1,4 @@
-# PhyloChromoMap_py
+# PhyloChromoMap_py (current version, 1.2)
 PhyloChromoMap: Phylogenomic chromosome mapping
 
 Manual: https://github.com/marioalbertocer/PhyloChromoMap_py/blob/master/phylochromomap_manual.pdf
